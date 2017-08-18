@@ -17,5 +17,10 @@ namespace ArticleBrowserAddIn.Models.Data
 		{
 			Categories = new List<Category>();
 		}
+
+		public override string ToString()
+		{
+			return $"{Title}, {Author}, {Year}";
+		}
 	}
 }

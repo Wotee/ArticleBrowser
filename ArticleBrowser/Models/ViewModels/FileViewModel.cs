@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -90,9 +91,21 @@ namespace ArticleBrowserAddIn.Models.ViewModels
 			Filter();
 		}
 
-		private void Open()
+		/// <summary>
+		/// Open the item
+		/// </summary>
+		/// <param name="itemToBeOpened"></param>
+		private void Open(object itemToBeOpened)
 		{
-			throw new NotImplementedException("Toimiiks tää ees");
+			var item = itemToBeOpened as Item;
+			if (item == null)
+			{
+				MessageBox.Show("Error occurred");
+				return;
+			}
+
+			MessageBox.Show(item.ToString());
+			// I guess this should be now passed to DataRetriever?
 		}
 
 		/// <summary>
