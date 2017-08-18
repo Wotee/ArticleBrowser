@@ -4,9 +4,7 @@ namespace ArticleBrowserAddIn.Models.Data
 {
 	public interface IDataRetriever
 	{
-		IEnumerable<Item> GetItems();
-
-		Item GetItem(string Title);
+		IList<Item> GetItems();
 
 		void AddItem(Item item);
 	}

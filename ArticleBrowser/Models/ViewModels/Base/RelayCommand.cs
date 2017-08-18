@@ -10,14 +10,15 @@ namespace ArticleBrowserAddIn.Models.ViewModels.Base
 	{
 		#region Private Members
 
-		private readonly Action _mAction;
+		private readonly Action<object> _actionWithParameters;
+		private readonly Action _actionWithOutParameters;
 
 		#endregion
 
 		#region Public Events
 
 		/// <summary>
-		/// The event thats fired when the <see cref="CanExecute(object)"/> value has changed
+		/// The event that's fired when the <see cref="CanExecute(object)"/> value has changed
 		/// </summary>
 		public event EventHandler CanExecuteChanged = (sender, e) => { };
 
@@ -25,9 +26,22 @@ namespace ArticleBrowserAddIn.Models.ViewModels.Base
 
 		#region Constructor
 
+		/// <summary>
+		/// Constructor for Command with parameters.
+		/// </summary>
+		/// <param name="action"></param>
+		public RelayCommand(Action<object> action)
+		{
+			_actionWithParameters = action;
+		}
+
+		/// <summary>
+		/// Constructor for parameterless Command
+		/// </summary>
+		/// <param name="action"></param>
 		public RelayCommand(Action action)
 		{
-			_mAction = action;
+			_actionWithOutParameters = action;
 		}
 		#endregion region
 
@@ -38,18 +52,24 @@ namespace ArticleBrowserAddIn.Models.ViewModels.Base
 		/// </summary>
 		/// <param name="parameter"></param>
 		/// <returns>true</returns>
-		public bool CanExecute(object parameter)
+		public bool CanExecute(object parameter = null) => true;
+
+		/// <summary>
+		/// Executes the commands Action without parameters
+		/// </summary>
+		/// <param name="parameter"></param>
+		public void Execute()
 		{
-			return true;
+			_actionWithOutParameters();
 		}
 
 		/// <summary>
-		/// Executes the commands Action
+		/// Executes the command Action with parameters
 		/// </summary>
 		/// <param name="parameter"></param>
 		public void Execute(object parameter)
 		{
-			_mAction();
+			_actionWithParameters(parameter);
 		}
 
 		#endregion

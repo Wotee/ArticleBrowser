@@ -13,7 +13,7 @@ namespace ArticleBrowserTest
 		[Test]
 		public void ConstructorTest()
 		{
-			FileViewModel fvm = new FileViewModel(status);
+			FileViewModel fvm = new FileViewModel();
 			Assert.IsNotNull(fvm);
 			Assert.IsNotNull(fvm.Items);
 			Assert.AreEqual(1, fvm.Items.Count);

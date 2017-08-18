@@ -135,6 +135,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -186,14 +187,11 @@
     <Compile Include="ControlHost.Designer.cs">
       <DependentUpon>ControlHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="IoC.cs" />
     <Compile Include="Models\Data\Category.cs" />
     <Compile Include="Models\Data\DataRetriever.cs" />
     <Compile Include="Models\Data\Item.cs" />
     <Compile Include="Models\Data\IDataRetriever.cs" />
-    <Compile Include="Models\Factories\BaseFactory.cs" />
-    <Compile Include="Models\Factories\DataRetrieverFactory.cs" />
-    <Compile Include="Models\Factories\ProdStatus.cs" />
-    <Compile Include="Models\Mocks\MockDataRetriever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -235,7 +233,6 @@
       <DependentUpon>ArticleBrowserAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <None Include="WordAddIn1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainView.xaml">

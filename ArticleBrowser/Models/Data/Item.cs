@@ -9,5 +9,13 @@ namespace ArticleBrowserAddIn.Models.Data
 		public int Year { get; set; }
 		public string Filepath { get; set; }
 		public List<Category> Categories { get; set; }
+
+		/// <summary>
+		/// Constructor for initializing the list automatically.
+		/// </summary>
+		public Item()
+		{
+			Categories = new List<Category>();
+		}
 	}
 }

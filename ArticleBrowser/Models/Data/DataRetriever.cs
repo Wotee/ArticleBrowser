@@ -18,29 +18,33 @@ namespace ArticleBrowserAddIn.Models.Data
 		/// <summary>
 		/// Filename to be used with db file and sql file
 		/// </summary>
-		private static string Filename = "Archiver";
+		private static string _filename = "Archiver";
+
 		/// <summary>
 		/// Extension for database
 		/// </summary>
-		private static readonly string DB = ".db";
+		private const string Db = ".db";
+
 		/// <summary>
 		/// Extension for database creation script
 		/// </summary>
-		private static readonly string SQL = ".sql";
+		private const string Sql = ".sql";
+
 		/// <summary>
 		/// Path to DB File
 		/// </summary>
-		private static string DbFile => AppDomain.CurrentDomain.BaseDirectory + Filename + DB;
+		private static string DbFile => AppDomain.CurrentDomain.BaseDirectory + _filename + Db;
 
 		/// <summary>
 		/// Path to DB creation script
 		/// </summary>
-		private static string SqlFile => AppDomain.CurrentDomain.BaseDirectory + Filename + SQL;
+		private static string SqlFile => AppDomain.CurrentDomain.BaseDirectory + _filename + Sql;
 		// TODO: Change so both tests and prod run..
 		/// <summary>
 		/// Connection for the storageDB
 		/// </summary>
 		private static IDbConnection Connection => new SQLiteConnection("DataSource=" + DbFile + ";Version=3");
+		private const string GetterSql = "SELECT * FROM Item I LEFT JOIN ItemCategory IC ON I.ID = IC.ItemID LEFT JOIN Category C ON IC.CategoryID = C.ID";
 
 		#endregion
 
@@ -62,7 +66,7 @@ namespace ArticleBrowserAddIn.Models.Data
 		public DataRetriever(string filename)
 		{
 			// TODO: Exception handlings if files not found or something else bad happens?
-			Filename = filename;
+			_filename = filename;
 			if (!File.Exists(DbFile))
 				CreateDatabase();
 		}
@@ -70,61 +74,21 @@ namespace ArticleBrowserAddIn.Models.Data
 
 		#region Public Methods
 		/// <summary>
-		/// Gets all of the items
+		/// Get all of the items
 		/// </summary>
 		/// <returns>IEnumerable of items, or null if empty</returns>
-		IEnumerable<Item> IDataRetriever.GetItems()
+		IList<Item> IDataRetriever.GetItems()
 		{
-			string sql =
-				"SELECT * " +
-				"FROM Item I " +
-				"INNER JOIN ItemCategory IC " +
-				"ON I.ID = IC.ItemID " +
-				"INNER JOIN Category C " +
-				"ON IC.CategoryID = C.ID";
 			var lookup = new Dictionary<string, Item>();
-			Connection.Query<Item, Category, Item>(sql, (i, c) =>
-				{
-					Item item;
-					if (!lookup.TryGetValue(i.Title, out item))
-						lookup.Add(i.Title, item = i);
-					if (item.Categories == null)
-						item.Categories = new List<Category>();
-					item.Categories.Add(c);
-					return item;
-				});
-			return lookup.Values;
-		}
-
-		/// <summary>
-		/// Gets single item based on title
-		/// </summary>
-		/// <param name="Title">Title to be searched</param>
-		/// <returns></returns>
-		Item IDataRetriever.GetItem(string title)
-		{
-			string sql =
-				"SELECT * " +
-				"FROM Item I " +
-				"INNER JOIN ItemCategory IC " +
-				"ON I.ID = IC.ItemID " +
-				"INNER JOIN Category C " +
-				"ON IC.CategoryID = C.ID " +
-				"WHERE I.Title = @title";
-			var lookup = new Dictionary<string, Item>();
-
-			Connection.Query<Item, Category, Item>(sql, (i, c) =>
-				{
-					Item item;
-					if (!lookup.TryGetValue(i.Title, out item))
-						lookup.Add(i.Title, item = i);
-					if (item.Categories == null)
-						item.Categories = new List<Category>();
-					item.Categories.Add(c);
-					return item;
-				},
-				new { Title = title });
-			return lookup.Values.FirstOrDefault();
+			Connection.Query<Item, Category, Item>(GetterSql, (i, c) =>
+			{
+				Item item;
+				if (!lookup.TryGetValue(i.Title, out item))
+					lookup.Add(i.Title, item = i);
+				item.Categories.Add(c); // TODO: This here was c
+				return item;
+			});
+			return lookup.Values.ToList();
 		}
 
 		/// <summary>
