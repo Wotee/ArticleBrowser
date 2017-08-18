@@ -74,7 +74,7 @@ namespace ArticleBrowserAddIn.Models.ViewModels
 		#region Public Commands
 
 		public ICommand OpenCommand { get; }
-		public ICommand HeaderSortClickCommand { get; }
+		public ICommand ColumnSortCommand { get; }
 
 		#endregion
 
@@ -82,7 +82,7 @@ namespace ArticleBrowserAddIn.Models.ViewModels
 		{
 			// Initialize commands
 			OpenCommand = new RelayCommand(Open);
-			HeaderSortClickCommand = new RelayCommand(HeaderClickSort);
+			ColumnSortCommand = new RelayCommand(ColumnSort);
 
 			// Get stuff from DB
 			var retriever = IoC.Get<DataRetriever>();
@@ -112,7 +112,7 @@ namespace ArticleBrowserAddIn.Models.ViewModels
 		/// Sort logic for defining the column and sort direction to be used
 		/// </summary>
 		/// <param name="sender">Clicked ColumnHeader</param>
-		private void HeaderClickSort(object sender)
+		private void ColumnSort(object sender)
 		{
 			var headerClicked = sender as GridViewColumnHeader;
 

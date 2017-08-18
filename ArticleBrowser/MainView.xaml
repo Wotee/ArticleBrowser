@@ -26,7 +26,7 @@
 				<Setter Property="Foreground" Value="LightSkyBlue"/>
 				<Setter Property="FontSize" Value="14"/>
 				<!-- Add Sort Command Binding for headers -->
-				<Setter Property="Command" Value="{Binding HeaderSortClickCommand}"/>
+				<Setter Property="Command" Value="{Binding ColumnSortCommand}"/>
 				<Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}"/>
 			</Style>
 		</StackPanel.Resources>
