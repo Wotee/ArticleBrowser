@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using ArticleBrowserAddIn.Models.ViewModels;
+using System.Windows.Data;
+using WordAddIn1.ViewModel;
 
-namespace ArticleBrowserAddIn
+namespace WordAddIn1.View
 {
 	/// <summary>
 	/// Interaction logic for MainView.xaml

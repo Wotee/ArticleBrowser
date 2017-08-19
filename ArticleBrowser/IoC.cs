@@ -1,4 +1,5 @@
-﻿using ArticleBrowserAddIn.Models.Data;
+﻿using WordAddIn1.Model;
+using WordAddIn1.Model.DataRetriever;
 
 namespace ArticleBrowserAddIn
 {

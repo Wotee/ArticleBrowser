@@ -1,4 +1,5 @@
 ﻿using System;
+using WordAddIn1.Misc;
 using CustomTaskPane = Microsoft.Office.Tools.CustomTaskPane;
 
 namespace ArticleBrowserAddIn

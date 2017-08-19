@@ -1,4 +1,4 @@
-﻿namespace ArticleBrowserAddIn.Models.Data
+﻿namespace WordAddIn1.Model
 {
 	public class Category
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ArticleBrowserAddIn.Models.Data
+namespace WordAddIn1.Model
 {
 	public class Item
 	{
@@ -18,6 +18,7 @@ namespace ArticleBrowserAddIn.Models.Data
 			Categories = new List<Category>();
 		}
 
+		// TODO: Can perhaps be removed later, or at least make some use of this? This shows fine data on debugger though
 		public override string ToString()
 		{
 			return $"{Title}, {Author}, {Year}";

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ArticleBrowserAddIn.Models.Data
+namespace WordAddIn1.Model.DataRetriever
 {
 	public interface IDataRetriever
 	{

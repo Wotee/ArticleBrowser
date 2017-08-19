@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ArticleBrowserAddIn.Models.ViewModels.Base
+namespace WordAddIn1.ViewModel
 {
 	/// <summary>
 	/// A basic command that uns an Action

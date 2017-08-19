@@ -8,11 +8,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using ArticleBrowserAddIn.Models.Data;
-using ArticleBrowserAddIn.Models.ViewModels.Base;
-using Microsoft.Office.Tools.Word;
+using ArticleBrowserAddIn;
+using WordAddIn1.Model;
+using WordAddIn1.Model.DataRetriever;
 
-namespace ArticleBrowserAddIn.Models.ViewModels
+namespace WordAddIn1.ViewModel
 {
 	/// <summary>
 	/// A view model for files
@@ -24,6 +24,7 @@ namespace ArticleBrowserAddIn.Models.ViewModels
 		private string _titleSearch = "";
 		private GridViewColumnHeader _lastHeaderClicked = null;
 		ListSortDirection _lastDirection = ListSortDirection.Ascending;
+
 		#endregion
 
 		#region Public properties
@@ -84,7 +85,8 @@ namespace ArticleBrowserAddIn.Models.ViewModels
 			OpenCommand = new RelayCommand(Open);
 			ColumnSortCommand = new RelayCommand(ColumnSort);
 
-			// Get stuff from DB
+			// Get stuff from DB // TODO: Change to DataRetriever after some validation!
+			//var retriever = IoC.Get<TestDataRetriever>();
 			var retriever = IoC.Get<DataRetriever>();
 			InMemoryItems = retriever.GetItems() as List<Item>;
 			// Show correct stuff in UI
@@ -98,11 +100,7 @@ namespace ArticleBrowserAddIn.Models.ViewModels
 		private void Open(object itemToBeOpened)
 		{
 			var item = itemToBeOpened as Item;
-			if (item == null)
-			{
-				MessageBox.Show("Error occurred");
-				return;
-			}
+			if (item == null) return;
 
 			MessageBox.Show(item.ToString());
 			// I guess this should be now passed to DataRetriever?

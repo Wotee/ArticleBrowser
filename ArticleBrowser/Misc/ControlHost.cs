@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 
-namespace ArticleBrowserAddIn
+namespace WordAddIn1.Misc
 {
 	/// <summary>
 	/// ControlHost to wrap the WPF controls, since word does not

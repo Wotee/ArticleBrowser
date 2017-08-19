@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using PropertyChanged;
 
-namespace ArticleBrowserAddIn.Models.ViewModels.Base
+namespace WordAddIn1.ViewModel
 {
 	/// <summary>
 	/// A base view model that fires PropertyChanged events as needed

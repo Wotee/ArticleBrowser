@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms.Integration;
 
-namespace ArticleBrowserAddIn
+namespace WordAddIn1.Misc
 {
 	partial class ControlHost
 	{
@@ -32,7 +32,7 @@ namespace ArticleBrowserAddIn
 		private void InitializeComponent()
 		{
 			this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-			this._mainView = new MainView();
+			this._mainView = new WordAddIn1.View.MainView();
 			this.SuspendLayout();
 			// 
 			// elementHost1
@@ -58,6 +58,6 @@ namespace ArticleBrowserAddIn
 		#endregion
 
 		private ElementHost elementHost1;
-		private MainView _mainView;
+		private WordAddIn1.View.MainView _mainView;
 	}
 }

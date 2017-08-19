@@ -112,6 +112,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Protobuf, Version=3.3.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.3.0\lib\net45\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PropertyChanged, Version=1.52.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
@@ -120,6 +128,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.104.0\lib\net46\System.Data.SQLite.dll</HintPath>
@@ -181,27 +190,29 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="ControlHost.cs">
+    <Compile Include="Misc\ControlHost.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ControlHost.Designer.cs">
+    <Compile Include="Misc\ControlHost.Designer.cs">
       <DependentUpon>ControlHost.cs</DependentUpon>
     </Compile>
     <Compile Include="IoC.cs" />
-    <Compile Include="Models\Data\Category.cs" />
-    <Compile Include="Models\Data\DataRetriever.cs" />
-    <Compile Include="Models\Data\Item.cs" />
-    <Compile Include="Models\Data\IDataRetriever.cs" />
+    <Compile Include="Model\DataRetriever\BaseDataRetriever.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\DataRetriever\DataRetriever.cs" />
+    <Compile Include="Model\DataRetriever\TestDataRetriever.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\DataRetriever\IDataRetriever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainView.xaml.cs">
+    <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="Models\ViewModels\Base\RelayCommand.cs" />
-    <Compile Include="Models\ViewModels\FileViewModel.cs" />
-    <EmbeddedResource Include="ControlHost.resx">
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\FileViewModel.cs" />
+    <EmbeddedResource Include="Misc\ControlHost.resx">
       <DependentUpon>ControlHost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -214,6 +225,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="Misc\packages.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -235,14 +247,23 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainView.xaml">
+    <Page Include="View\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Styles\Texts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
