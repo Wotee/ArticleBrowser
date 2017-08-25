@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using Dapper;
 using MySql.Data.MySqlClient;
 
 namespace WordAddIn1.Model.DataRetriever
@@ -12,6 +14,13 @@ namespace WordAddIn1.Model.DataRetriever
 		{
 			var connectionString = ConfigurationManager.AppSettings["ConnectionString"];
 			base.Connection = new MySqlConnection(connectionString);
+			// TODO: Test the DB structure, if it does not exist, create new
+			var asd = RunQuery(GetTableNames);
+		}
+
+		private IEnumerable<dynamic> GetTableNames()
+		{
+			return Connection.Query<dynamic>("SHOW TABLES");
 		}
 	}
 }

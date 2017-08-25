@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Data;
-using WordAddIn1.ViewModel;
+﻿using WordAddIn1.ViewModel;
 
 namespace WordAddIn1.View
 {

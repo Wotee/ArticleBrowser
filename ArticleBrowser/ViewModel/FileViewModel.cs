@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -24,23 +23,34 @@ namespace WordAddIn1.ViewModel
 		private string _titleSearch = "";
 		private GridViewColumnHeader _lastHeaderClicked = null;
 		ListSortDirection _lastDirection = ListSortDirection.Ascending;
+		private ObservableCollection<Item> _visualItems = new ObservableCollection<Item>();
+		private List<Item> _items = new List<Item>();
 
 		#endregion
 
 		#region Public properties
+
 		/// <summary>
 		/// Source for TreeView showing filtered items
 		/// </summary>
-		public ObservableCollection<Item> Items { get; set; }
+		public ObservableCollection<Item> VisualItems
+		{
+			get { return _visualItems; }
+			set { SetProperty(ref _visualItems, value); }
+		}
 
 		/// <summary>
 		/// In-memory representation of the database.
 		/// Used to achieve fast filtering to the UI.
 		/// </summary>
-		internal List<Item> InMemoryItems { get; set; }
+		internal List<Item> InMemoryItems
+		{
+			get { return _items; }
+			set { SetProperty(ref _items, value); }
+		}
 
 		/// <summary>
-		/// Author to filter items shown in <see cref="Items"/>
+		/// Author to filter items shown in <see cref="VisualItems"/>
 		/// </summary>
 		public string AuthorSearchBox
 		{
@@ -50,13 +60,13 @@ namespace WordAddIn1.ViewModel
 			}
 			set
 			{
-				_authorSearch = value;
-				Filter();
+				SetProperty(ref _authorSearch, value);
+				FilterItemsForView();
 			}
 		}
 
 		/// <summary>
-		/// Title to filter items shown in <see cref="Items"/>
+		/// Title to filter items shown in <see cref="VisualItems"/>
 		/// </summary>
 		public string TitleSearchBox
 		{
@@ -66,8 +76,8 @@ namespace WordAddIn1.ViewModel
 			}
 			set
 			{
-				_titleSearch = value;
-				Filter();
+				SetProperty(ref _titleSearch, value);
+				FilterItemsForView();
 			}
 		}
 		#endregion
@@ -79,18 +89,22 @@ namespace WordAddIn1.ViewModel
 
 		#endregion
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public FileViewModel()
 		{
 			// Initialize commands
 			OpenCommand = new RelayCommand(Open);
 			ColumnSortCommand = new RelayCommand(ColumnSort);
 
-			// Get stuff from DB // TODO: Change to DataRetriever after some validation!
-			//var retriever = IoC.Get<TestDataRetriever>();
-			var retriever = IoC.Get<DataRetriever>();
-			InMemoryItems = retriever.GetItems() as List<Item>;
+			// Get stuff from DB to in-memory model
+			//var retriever = IoC.Get<DataRetriever>();
+			var retriever = IoC.Get<TestDataRetriever>();
+			InMemoryItems = retriever.RunQuery(retriever.GetAllItems) as List<Item>;
+
 			// Show correct stuff in UI
-			Filter();
+			FilterItemsForView();
 		}
 
 		/// <summary>
@@ -160,7 +174,7 @@ namespace WordAddIn1.ViewModel
 		/// <param name="direction"></param>
 		private void Sort(string sortBy, ListSortDirection direction)
 		{
-			var dataView = CollectionViewSource.GetDefaultView(Items);
+			var dataView = CollectionViewSource.GetDefaultView(VisualItems);
 			dataView.SortDescriptions.Clear();
 			var sd = new SortDescription(sortBy, direction);
 			dataView.SortDescriptions.Add(sd);
@@ -168,17 +182,17 @@ namespace WordAddIn1.ViewModel
 		}
 
 		/// <summary>
-		/// Filter the items showed in UI
+		/// FilterItemsForView the items showed in UI
 		/// </summary>
-		internal void Filter()
+		internal void FilterItemsForView()
 		{
+			if (VisualItems == null) return;
+
 			var title = new Regex(TitleSearchBox);
 			var author = new Regex(AuthorSearchBox);
 
 			// TODO: This can be made faster, if the LINQ is ripped out of there
-			Items = new ObservableCollection<Item>(InMemoryItems.Where(x => author.IsMatch(x.Author) && title.IsMatch(x.Title)).Select(x => x));
+			VisualItems = new ObservableCollection<Item>(InMemoryItems.Where(x => author.IsMatch(x.Author) && title.IsMatch(x.Title)).Select(x => x));
 		}
-
-
 	}
 }

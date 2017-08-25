@@ -1,11 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WordAddIn1.Model.DataRetriever
 {
 	public interface IDataRetriever
 	{
-		IList<Item> GetItems();
+		#region Wrapper methods
+		void RunQuery(Action action);
 
-		void AddItem(Item item);
+		T RunQuery<T>(Func<T> action);
+
+		TResult RunQuery<T, TResult>(Func<T, TResult> action, T parameter);
+		#endregion
+
+		#region Actual Methods
+		Func<IList<Item>> GetAllItems { get; }
+
+		Action<Item> AddItem { get; }
+		#endregion
 	}
 }

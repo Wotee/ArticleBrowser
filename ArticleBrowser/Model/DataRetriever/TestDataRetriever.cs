@@ -37,6 +37,7 @@ namespace WordAddIn1.Model.DataRetriever
 			// TODO: Exception handling if files not found or something else bad happens?
 			if (!File.Exists(DbFile))
 				CreateDatabase();
+			// TODO: Fix this later
 			base.Connection = new SQLiteConnection("DataSource=" + DbFile + ";Version=3");
 		}
 

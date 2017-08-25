@@ -33,7 +33,7 @@
 		</StackPanel>
 
 		<!-- List view of the results -->
-		<ListView ItemsSource="{Binding Items}" Margin="0 10 5 0" x:Name="Items" MaxHeight="150">
+		<ListView ItemsSource="{Binding VisualItems}" Margin="0 10 5 0" x:Name="Items" MaxHeight="150">
 			<ListView.View>
 				<GridView>
 					<GridViewColumn DisplayMemberBinding="{Binding Author}" Header="Author"/>
