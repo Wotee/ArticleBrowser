@@ -1,0 +1,38 @@
+﻿<Window x:Class="WordAddIn1.Views.AddItemView"
+			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+			xmlns:local="clr-namespace:WordAddIn1.Views"
+			mc:Ignorable="d" 
+			d:DesignHeight="300"
+			d:DesignWidth="200"
+			Height="300"
+			Width="200"
+			WindowStyle="None"
+			WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="9*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0">
+			<TextBox Text="Author(s):"/>
+			<TextBlock ></TextBlock>
+			<TextBox Text="Title"/>
+			<TextBlock ></TextBlock>
+			<TextBox Text="Year:"></TextBox>
+			<TextBlock ></TextBlock>
+			<TextBox Text="Categories:"/>
+		</StackPanel>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Button Content="OK" Click="OnButtonOKClick"/>
+			<Button Grid.Column="1" Content="Cancel" Click="OnButtonCancelClick"/>
+		</Grid>
+	</Grid>
+</Window>

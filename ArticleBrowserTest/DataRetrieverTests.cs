@@ -1,45 +1,34 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Dapper;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
-using WordAddIn1.Model.DataRetriever;
 
 namespace ArticleBrowserTest
 {
 	[TestFixture]
 	public class DataRetrieverTests
 	{
-		private const string Host = "articlebrowserdb.csuwa1w47oj9.eu-central-1.rds.amazonaws.com";
-		private const string Port = "3306";
-		private const string Db = "articlebrowserdb";
-		private const string Username = "ArticleBrowser";
-		private const string Password = "password";
 
-		[SetUp]
-		public void Setup()
-		{
-			
-		}
 
-		[TearDown]
-		public void TearDown()
+		[TestCaseSource(typeof(Data), nameof(Data.TestData))]
+		public void TestDbConnection(string connectionString)
 		{
-			try
-			{
-				// Delete the shit
-			}
-			catch (Exception)
-			{
-				Assume.That(false, "Teardown kuzi");
-			}
-		}
-
-		[Test]
-		public void TestDbConnection()
-		{
-			var connectionString = $"Server={Host};UID={Username};PWD={Password};DB={Db};Port={Port}";
+			Assume.That(!string.IsNullOrEmpty(connectionString), "Connection string was invalid");
 			var connection = new MySqlConnection(connectionString);
+			var result = connection.Query("SELECT * FROM user");
+			Assert.That(result, Is.Not.Empty);
+		}
+	}
+
+	public static class Data
+	{
+		public static IEnumerable<TestCaseData> TestData
+		{
+			get
+			{
+				yield return new TestCaseData("Server=articlebrowserdb.csuwa1w47oj9.eu-central-1.rds.amazonaws.com;UID=ArticleBrowser;PWD=password;Database=mysql;Port=3306").SetName("Valid Connection String");
+				yield return new TestCaseData("").SetName("Invalid connection string");
+			}
 		}
 	}
 }

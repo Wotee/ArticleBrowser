@@ -7,14 +7,15 @@ namespace WordAddIn1.Model
 		public string Title { get; set; }
 		public string Author { get; set; }
 		public int Year { get; set; }
-		public string Filepath { get; set; }
 		public List<Category> Categories { get; set; }
+		public byte[] Content { get; set; }
 
 		/// <summary>
-		/// Constructor for initializing the list automatically.
+		/// Constructor
 		/// </summary>
 		public Item()
 		{
+			// Initialize the category list, so Dapper can use Items without any further trouble
 			Categories = new List<Category>();
 		}
 

@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Windows.Forms;
 using WordAddIn1.Misc;
-using CustomTaskPane = Microsoft.Office.Tools.CustomTaskPane;
 
-namespace ArticleBrowserAddIn
+namespace WordAddIn1
 {
 	public partial class ArticleBrowserAddIn
 	{
-		private CustomTaskPane _myTaskPane;
+		private Microsoft.Office.Tools.CustomTaskPane _myTaskPane;
 		private ControlHost _host;
 
 		private void ArticleBrowserAddIn_Startup(object sender, EventArgs e)
@@ -17,6 +17,8 @@ namespace ArticleBrowserAddIn
 			// Add the name of the plugin
 			_myTaskPane = CustomTaskPanes.Add(_host, "ArticleBrowser");
 			_myTaskPane.Visible = true;
+			// Bring the control to front, so drag n drop element work
+			_myTaskPane.Control.BringToFront();
 		}
 
 		private void ArticleBrowserAddIn_Shutdown(object sender, EventArgs e)

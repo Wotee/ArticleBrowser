@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms.Integration;
+using WordAddIn1.Views;
 
 namespace WordAddIn1.Misc
 {
@@ -32,7 +33,7 @@ namespace WordAddIn1.Misc
 		private void InitializeComponent()
 		{
 			this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-			this._mainView = new WordAddIn1.View.MainView();
+			this._mainView = new MainView();
 			this.SuspendLayout();
 			// 
 			// elementHost1
@@ -58,6 +59,6 @@ namespace WordAddIn1.Misc
 		#endregion
 
 		private ElementHost elementHost1;
-		private WordAddIn1.View.MainView _mainView;
+		private MainView _mainView;
 	}
 }

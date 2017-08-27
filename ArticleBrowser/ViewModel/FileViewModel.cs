@@ -7,9 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using ArticleBrowserAddIn;
 using WordAddIn1.Model;
-using WordAddIn1.Model.DataRetriever;
+using WordAddIn1.Model.DataHandler;
 
 namespace WordAddIn1.ViewModel
 {
@@ -21,7 +20,7 @@ namespace WordAddIn1.ViewModel
 		#region Private Members
 		private string _authorSearch = "";
 		private string _titleSearch = "";
-		private GridViewColumnHeader _lastHeaderClicked = null;
+		private GridViewColumnHeader _lastHeaderClicked;
 		ListSortDirection _lastDirection = ListSortDirection.Ascending;
 		private ObservableCollection<Item> _visualItems = new ObservableCollection<Item>();
 		private List<Item> _items = new List<Item>();
@@ -99,9 +98,8 @@ namespace WordAddIn1.ViewModel
 			ColumnSortCommand = new RelayCommand(ColumnSort);
 
 			// Get stuff from DB to in-memory model
-			//var retriever = IoC.Get<DataRetriever>();
-			var retriever = IoC.Get<TestDataRetriever>();
-			InMemoryItems = retriever.RunQuery(retriever.GetAllItems) as List<Item>;
+			DataHandler = IoC.Get<DataHandler>();
+			InMemoryItems = DataHandler.GetAllItems() as List<Item>;
 
 			// Show correct stuff in UI
 			FilterItemsForView();
@@ -117,7 +115,7 @@ namespace WordAddIn1.ViewModel
 			if (item == null) return;
 
 			MessageBox.Show(item.ToString());
-			// I guess this should be now passed to DataRetriever?
+			// I guess this should be now passed to DataHandler?
 		}
 
 		/// <summary>
@@ -191,7 +189,7 @@ namespace WordAddIn1.ViewModel
 			var title = new Regex(TitleSearchBox);
 			var author = new Regex(AuthorSearchBox);
 
-			// TODO: This can be made faster, if the LINQ is ripped out of there
+			// TODO: Can the be faster?
 			VisualItems = new ObservableCollection<Item>(InMemoryItems.Where(x => author.IsMatch(x.Author) && title.IsMatch(x.Title)).Select(x => x));
 		}
 	}

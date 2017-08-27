@@ -57,7 +57,6 @@ namespace WordAddIn1.ViewModel
 		/// <summary>
 		/// Executes the commands Action without parameters
 		/// </summary>
-		/// <param name="parameter"></param>
 		public void Execute()
 		{
 			_actionWithOutParameters();
